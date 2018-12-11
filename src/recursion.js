@@ -216,7 +216,8 @@ if
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
-	var length = string.length;
+	string = string.toLowercase().trim();
+  var length = string.length;
     if (length === 0 || length === 1) {
         return true;
     }
