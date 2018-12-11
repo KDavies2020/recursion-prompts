@@ -191,17 +191,30 @@ var powerOfTwo = function(n) {
  }
  
 
- //if n > 2
- // n == 2 => true
-//n < 2 && n !== 1 => false
-// n > 2
-//powerOfTwo(n / 2)
+
 };
 
 
-// 9. Write a function that reverses a string.
+// 9. Write a function that reverses a string. 
 var reverse = function(string) {
+var reversedArray = []
+if (string.length > 0){
+	reversedArray.push(string[string.length - 1]);
+	return reversedArray.concat(reverse(string.slice(0,string.length-1)));
+} 
+if (string.length === 0){
+	//return reversedArray.concat();
+	reversedArray.toString();
+	return reversedArray
+}
+ 
 };
+
+/* 
+start with an if statement setting a starting variable. 
+if 
+*/ 
+// turn 
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
