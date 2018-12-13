@@ -1,3 +1,4 @@
+
 /* jshint esversion: 6 */
 
 // Solve the following prompts using recursion.
@@ -6,254 +7,281 @@
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
+var factorial = function(n) {
+	if (n < 0) {
+		return null;
+	}
+	if (n === 0) {
+		return 1;
+	}
+	return n * factorial(n - 1);
 
-//  var factorial = function(n){
-// if (arguments[1] === NaN){
-//   var total = 1;
-// } else {
-//  var total = arguments[1] 
-// }
-//   if (n > 1){
-//   total = (total * n);
-//   return factorial(n-1, total) 
-//   }
- 
-//   if (n === 1){
-//     return multiplier;
-//   }
-//  return multiplier;
-// };
+	//if n < 0 return -1
 
-
-var factorial = function(number) {
-  
-  if (number < 0) {
-    return null;
-  }
-
-  
-  if (number === 0) {
-    return 1;
-  }
-
-  return (number * factorial(number - 1));
-}
-
-
-/*return a number that has been multiplied. note start with 1 and not 0. 
-multiple n to the number, than place it back into the function with a value of one less
-if n hit's 0, do nothis but return the desired number 
-
-  */
-
-
-// 2. Compute the sum of an array of integers.
-// sum([21]); // 21
- var sum = function(array) {
-
-// if array.length > 1 
-// slice off thirst number and add it to the last element of the list
-// if the list's length is 1, return the value of that one element. 
-
- if(array.length === 0){
-     return 0;
- } else {
-   return array[0] + sum(array.slice(1))
-   //console.log(array.slice(1))
- }
-
+	//we need the base case
+		//0 is the base case
+			//if 0 return 1
+	//the factorial case
+		//every n should be decremented by 1
 
 };
+
+// 2. Compute the sum of an array of integers.
+// sum([1,2,3,4,5,6]); // 21
+
+var sum = function(array) {
+  let result = 0;
+  let copyArr = array.slice();
+  if (copyArr.length === 0) {
+      return 0;
+  }
+  result += copyArr[0];
+  copyArr.shift();
+  return result + sum(copyArr)
+	//base case
+    //make a coprArr = array.slice();
+		//when the copyArr length is 0
+    //return 0
+	//factorial case
+    //shift the copyArr
+    //return result + sum(copyArr) 
+};
+
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
+  sum = 0;
+  if (array.length === 0) {
+  	return sum;
+  }
+  for (var i = 0; i < array.length; i++) {
+  	if (typeof array[i] === 'number') {
+  		sum += array[i];
+  	}
+  	if (Array.isArray(array[i])) {
+  		 sum += arraySum(array[i]);
+  	}
+  }
+  return sum;
+};
 
-var sum = 0;
- for (var i = 0; i < array.length; i++){
-   var currentVal = array[i];
-   if(typeof currentVal === 'number'){
-     sum += currentVal;
-   }
-   if(Array.isArray(currentVal)){
-     sum += arraySum(currentVal);
-   }
- }
- return sum
-}
+// arraySum([1,[2,3],[[4]],5]); // 15
 
+	// declare sum variable === 0
+	// if array length === 0 
+	  // return sum 
+	// iterate over array
+	  //check if element is a number
+	    // add to sum variable
+	  //check if element is an array
+	    // recursive case
+	    // return sum += arraySum(element[i])
 
 // 4. Check if a number is even.
 var isEven = function(n) {
- if( n < 0){
-   n =  -n;
-   return isEven(n)
- }
- if( n === 0){
-   return true
- }
- if( n === 1){
-   return false
- }
- if ( n > 1){
-   n = n-2;
-   return isEven(n)
- }
-
+	n = Math.abs(n);
+	if (n === 0) {
+		return true;
+	} else if (n === 1) {
+		return false;
+	}
+	return isEven(n - 2);
 };
+
+
+
+//recursive case
+	//divide a whole number by two 
+//base case
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
-
- var sum = 0;
-
- if (n === 0){
-   return sum
- }
- if (n > 0){
-  n = n-1
-  sum += n
- }
-
- if (n < 0){
-  n = n+1
-  sum += n
- }
- return sum += sumBelow(n)
-
+  if (n >= 0) {
+    if (n === 0) {
+	  return 0;
+	} else {
+	  return (n - 1) + sumBelow(n - 1);
+	}
+  } else if (n < 0) {
+      return (n + 1) + sumBelow(n + 1);
+    }
 };
+
+//recursive case
+	//return (n - 1) + sumBelow(n - 1)
+//base case
+	//if n === 1 return 1
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
-var range = function(x,y){
-var output = [];
-  if(x === y){
-    return output;
+// range(9,2); // [8,7,6,5,4,3]
+var range = function(x, y) {
+  var result = [];
+  if (x === y) {
+  	return [];
   }
-  if ( x < y - 1){
-     x++;
-    output.push(x);  
-    return output.concat(range(x, y))
+  if (y < x) {
+  	if (x === (y + 1)) {
+  		return result;
+  	} else {
+  		result.push(x - 1);
+  		return result.concat(range(x - 1, y));
+  	}
+  } 
+  if (x === (y - 1)) {
+  	return result;
+  } else {
+  	result.push(x + 1);
+  	return result.concat(range(x + 1, y));
   }
-  if ( x > y + 1){
-     x--;
-    output.push(x);  
-    return output.concat(range(x, y))
-  }
-  return output;
-}
+};
+
+
+//recursive case
+	//declare a result array
+	//push to the result x + 1 + range(x + 1, y)
+//base case
+	//stop when x === y - 1
+	//return result
 
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.
 // 8^2 = 8 x 8 = 64. Here, 8 is the base and 2 is the exponent.
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
-var exponent = function(base, exp) { // .25, -2
-	var total = 1;
-	if (exp === 0){
-		return 1;
-	}
-	if(exp === 1){
-		return total * base;
-	}
-	if (exp > 1){
-		total = total * base
-		exp--;
-		return total *= exponent(base, exp);
-
-	}
-	if(exp === -1){
-		return total / base ;
-	}
-	if (exp < -1){
-		exp = - exp;
-    total = total / base
-		exp--;
-		return total /= exponent(base, exp);
-	}
+var exponent = function(base, exp) {
+  if (exp === 0) {
+  	return 1;
+  }
+  // check if exp < 0
+  if (exp < 0) {
+    return 1 / (base / exponent(base, exp+1));
+  }
+  if (exp === 1) {
+  	return base;
+  }
+  return base * exponent(base, exp-1);
 };
+// if exp === 0
+  // return 1
+//recursive case
+  //  base * exponent(base, exp - 1)
+//base case
+  // if exp === 1
+    // return base
+
 
 // 8. Determine if a number is a power of two.
 // powerOfTwo(1); // true
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
- if( n === 1){
-   return true
- }
- if ( n < 2 && n !== 1){
-   return false
- } 
- if ( n >= 2){
- 	return powerOfTwo(n/2)
- }
- 
+  if (n < 1) {
+  	return false;
+  }
+  if (n === 1 || n === 2) {
+    return true;
+  }
+  return powerOfTwo(n/2);
+};
+// recursive case
+  //divide by 2 until 2
 
+// base case
+  // if n - 2 return false
+  // if n === 2 return true
 
+// 9. Write a function that reverses a string.
+var reverse = function(string) {
+	if (string.length === 0) {
+		return '';
+	} else {
+		return string.charAt(string.length - 1) + reverse(string.substring(0, string.length - 1))
+	}
 };
 
-
-// 9. Write a function that reverses a string. 
-var reverse = function(string){
-   var index = string.length-1;
-   if (string.length === 0){
-     return ''
-   } 
-   
-   return string[index] + reverse(string.slice(0,index))
-   
-};
- 
-
-
-/* 
-start with an if statement setting a starting variable. 
-if 
-*/ 
-// turn 
+//recursive case
+	//return charAt(string.length - 1) + reverse(string.substring(0, string.length - 1))
+//base case
+	//once we have an empty string, return string
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
-	string = string.toLowercase().trim();
-  var length = string.length;
-    if (length === 0 || length === 1) {
-        return true;
-    }
-    
-    if (string[0] === string[length - 1]) {
-        return palindrome( string.slice(1, length- 1) );
-    }
-    
-    return false;
+  string = string.toLowerCase();
+  if (string.length === 1 || string.length === 0) {
+  	return true;
+  }
+  if (string[0] === string[string.length - 1]) {
+    return palindrome(string.substring(1, string.length - 1));
+  }
+  return false;
 };
 
+//racecar
+//recursive case
+	// if first character === last character
+	  // remove first character & last character
+//base case
+	// if string.length === 0 or 1 return true
 
 // 11. Write a function that returns the remainder of x divided by y without using the
 // modulo (%) operator.
 // modulo(5,2) // 1
 // modulo(17,5) // 2
 // modulo(22,6) // 4
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var modulo = function(x, y) {
+  let result = 0;
+  if(x === 0 && y === 0) {
+    return NaN;
+  }
+    
+    if(x >0 && y > 0){
+    if (y > x) {
+    return x;
+    }
+    if (x - y < y) {
+    result = x - y
+    } else {
+    return modulo(x - y, y)
+    }
+  }
+
+
+
+  if(x > 0 && y < 0){
+    if (x + y < 0) {
+    return x;
+    }  else {
+    return modulo(x + y, y)
+    }
+  }
+  if( x < 0 && y > 0){
+    if(x+y>0){
+      return x
+    }
+    
+    else {
+    return modulo(x + y, y);
+  }
+}
+
+
+  if(x < 0 && y < 0){
+    if(y<x){
+      return x;
+    }
+    if(x-y>y){
+    result = x-y;
+    } else {
+    return modulo(x-y,y);
+  }
+}
+
+  return result;
+
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator or
